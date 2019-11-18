@@ -1,0 +1,10 @@
+{
+  "stats": {
+    "minecraft:mined/minecraft:diamond_ore": 233,
+    "minecraft:mined/minecraft:stone": 6
+  },
+  "data": {
+    "playername": "Somebody",
+    "lastUpdate": 54321
+  }
+}
