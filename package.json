@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@types/node": "^12.12.9",
+    "jsondiffpatch": "^0.3.11",
+    "typescript": "^3.7.2"
+  }
+}
