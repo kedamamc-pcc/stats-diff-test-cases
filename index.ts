@@ -1,15 +1,8 @@
-import diff from './diff'
-import * as testcase01 from './tests/01'
-import * as testcase02 from './tests/02'
-import * as testcase03 from './tests/03'
-import * as testcase04 from './tests/04'
+const fs = require('fs')
 
-const testcases = [
-  testcase01,
-  testcase02,
-  testcase03,
-  testcase04,
-]
+import diff from './diff'
+
+const testcases = fs.readdirSync('./tests').map(f => require('./tests/' + f))
 
 console.log(`${'Case #'.padEnd(8, ' ')} Expected Result`)
 console.log('-------- -------- ------')
