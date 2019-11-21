@@ -1,46 +1,40 @@
-import {Diff, Json, DiffResult} from '.'
-let JsonDiff = require('jsondiffpatch');
+import {Diff, DiffResult, Json} from '.'
+
+const JsonDiff = require('jsondiffpatch')
 
 const diff: Diff = function (a: Json, b: Json): DiffResult {
-  /* wait for implementation */
-        let json  = JsonDiff.diff(a, b);
-        if (json === undefined || json === null) {
-            return {
-                result: true,
-                details: []
-            }
-        }
-        let list = [];
-        for (let i in json) {
-            if (json.hasOwnProperty(i)) {
-                if (typeof json[i] === "object" && i === 'stats') {
-                    for (let j in json[i]) {
-                        if (json[i].hasOwnProperty(j)) {
-                            list.push(`/${i}/${j}`)
-                        }
-                    }
-                    return {
-                        result: false,
-                        details: list
-                    }
-                }
-                if (typeof json[i] === "object" && i === 'data') {
-                    for (let j in json[i]) {
-                        if (json[i].hasOwnProperty(j)) {
-                            list.push(`/${i}/${j}`)
-                        }
-                    }
-                    return {
-                        result: true,
-                        details: list
-                    }
-                }
-            }
-        }
-        return {
-            result: false,
-            details: list
-        }
-};
+  let delta = JsonDiff.diff(a, b)
+  if (delta == null) {
+    return {
+      result: true,
+      details: [],
+    }
+  }
+  let list = []
+  for (let [key, val] of Object.entries(delta)) {
+    if (typeof val === 'object' && key === 'stats') {
+      for (let j of Object.keys(val)) {
+        list.push(`/${key}/${j}`)
+      }
+      return {
+        result: false,
+        details: list,
+      }
+    }
+    if (typeof val === 'object' && key === 'data') {
+      for (let j of Object.keys(val)) {
+        list.push(`/${key}/${j}`)
+      }
+      return {
+        result: true,
+        details: list,
+      }
+    }
+  }
+  return {
+    result: false,
+    details: list,
+  }
+}
 
 export default diff
